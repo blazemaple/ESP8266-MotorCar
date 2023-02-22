@@ -1,5 +1,5 @@
-# 1 "D:\\Lab\\AutoCar\\AutoCar.ino"
-# 2 "D:\\Lab\\AutoCar\\AutoCar.ino" 2
+# 1 "E:\\Lab\\autocar\\autocar.ino"
+# 2 "E:\\Lab\\autocar\\autocar.ino" 2
 
 int pwm_left;
 int pwm_right;
@@ -43,7 +43,7 @@ void loop()
   delay(1500);
 
   */
-# 40 "D:\\Lab\\AutoCar\\AutoCar.ino"
+# 40 "E:\\Lab\\autocar\\autocar.ino"
   M_Left.setmotor(4);
   M_Right.setmotor(4);
   Serial.println("STANDBY");

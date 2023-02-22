@@ -1,4 +1,4 @@
-#line 1 "D:\\Lab\\AutoCar\\.vscode\\c_cpp_properties.json"
+#line 1 "E:\\Lab\\autocar\\.vscode\\c_cpp_properties.json"
 {
     "version": 4,
     "configurations": [
@@ -51,7 +51,8 @@
                 "ARDUINO_BOARD_ID=\"d1_mini_clone\"",
                 "FLASHMODE_DOUT",
                 "USBCON"
-            ]
+            ],
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }
     ]
 }

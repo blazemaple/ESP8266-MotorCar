@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#line 1 "D:\\Lab\\AutoCar\\AutoCar.ino"
+#line 1 "E:\\Lab\\autocar\\autocar.ino"
 #include "WEMOS_Motor.h"
 
 int pwm_left;
@@ -10,11 +10,11 @@ int pwm_right;
 Motor M_Left(0x30,_MOTOR_A, 1000);
 Motor M_Right(0x30,_MOTOR_B, 1000);
 
-#line 11 "D:\\Lab\\AutoCar\\AutoCar.ino"
+#line 11 "E:\\Lab\\autocar\\autocar.ino"
 void setup();
-#line 19 "D:\\Lab\\AutoCar\\AutoCar.ino"
+#line 19 "E:\\Lab\\autocar\\autocar.ino"
 void loop();
-#line 11 "D:\\Lab\\AutoCar\\AutoCar.ino"
+#line 11 "E:\\Lab\\autocar\\autocar.ino"
 void setup()
 {
   Serial.begin(115200);

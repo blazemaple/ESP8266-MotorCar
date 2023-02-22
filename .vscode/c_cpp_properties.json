@@ -50,7 +50,8 @@
                 "ARDUINO_BOARD_ID=\"d1_mini_clone\"",
                 "FLASHMODE_DOUT",
                 "USBCON"
-            ]
+            ],
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }
     ]
 }

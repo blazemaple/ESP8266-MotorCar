@@ -1,5 +1,5 @@
 {
-  "additionalFiles": "..\\..\\..,..\\..\\..,..\\..",
+  "additionalFiles": "..\\..\\..,..\\..\\..,..\\..,..\\..\\..\\..\\..,..\\..\\..\\..\\..,..\\..\\..\\..,..\\..\\..\\..\\..,..\\..\\..\\..\\..",
   "builtInToolsFolders": "",
   "compiler.optimization_flags": "",
   "customBuildProperties": "",
@@ -7,5 +7,5 @@
   "hardwareFolders": "C:\\Users\\blaze\\AppData\\Local\\Arduino15\\packages",
   "otherLibrariesFolders": "C:\\Users\\blaze\\Documents\\Arduino\\libraries",
   "runtime.ide.version": "10607",
-  "sketchLocation": "D:\\Lab\\AutoCar"
+  "sketchLocation": "E:\\Lab\\autocar"
 }
