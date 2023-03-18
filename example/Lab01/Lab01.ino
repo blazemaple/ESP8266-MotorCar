@@ -15,6 +15,7 @@ void setup()
 
 void loop()
 {
+  
   Serial.println("GO");
   M_Left.setmotor(_CW, pwm);
   M_Right.setmotor(_CW, pwm);
@@ -29,4 +30,5 @@ void loop()
   M_Right.setmotor(_STOP);
   Serial.println("STOP");
   delay(1000); //停止1秒
+  
 }

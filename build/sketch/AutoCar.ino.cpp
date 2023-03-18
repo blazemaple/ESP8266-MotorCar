@@ -2,9 +2,9 @@
 #line 1 "D:\\Lab\\AutoCar\\AutoCar.ino"
 #include "WEMOS_Motor.h"
 
-int pwm_left;
-int pwm_right;
-
+int pwm_left = 0;
+int pwm_right = 0;
+String cmd = "";
 //Motor shiled I2C Address: 0x30
 //PWM frequency: 1000Hz(1kHz)
 Motor M_Left(0x30,_MOTOR_A, 1000);
@@ -12,16 +12,18 @@ Motor M_Right(0x30,_MOTOR_B, 1000);
 
 unsigned int Lcount = 0;
 unsigned int Rcount = 0;
-int LcounterPin = 12;
-int RcounterPin = 14;
+int LcounterPin = 14;
+int RcounterPin = 12;
 unsigned long time2;
-unsigned int Lrpm;
-unsigned int Rrpm;
-unsigned int grid_num = 20;
+int Lrpm = 0;
+int Rrpm = 0;
+uint8_t grid_num = 20;
 
 #line 28 "D:\\Lab\\AutoCar\\AutoCar.ino"
+void move(int LSpeed, int RSpeed);
+#line 42 "D:\\Lab\\AutoCar\\AutoCar.ino"
 void setup();
-#line 40 "D:\\Lab\\AutoCar\\AutoCar.ino"
+#line 51 "D:\\Lab\\AutoCar\\AutoCar.ino"
 void loop();
 #line 20 "D:\\Lab\\AutoCar\\AutoCar.ino"
 void IRAM_ATTR Lcounter() {
@@ -32,6 +34,20 @@ void IRAM_ATTR Rcounter() {
    Rcount++;
 }
 
+void move(int LSpeed, int RSpeed) {
+    if (LSpeed >= 0) {
+        M_Left.setmotor(_CW, LSpeed);
+    } else if (LSpeed < 0) {
+        M_Left.setmotor(_CCW, abs(LSpeed));
+    }
+
+    if (RSpeed >= 0) {
+        M_Right.setmotor(_CW, RSpeed);
+    } else if (LSpeed < 0) {
+        M_Right.setmotor(_CCW, abs(RSpeed));
+    }
+}
+
 void setup() {
    Serial.begin(115200);
    pinMode(LcounterPin, INPUT);
@@ -39,19 +55,39 @@ void setup() {
    attachInterrupt(digitalPinToInterrupt(LcounterPin), Lcounter, FALLING);
    attachInterrupt(digitalPinToInterrupt(RcounterPin), Rcounter, FALLING);
    
-   Serial.println("GO");
-   M_Left.setmotor(_CW, 80);
-   M_Right.setmotor(_CW, 80);
 }
 
 void loop() {
+  String temp = "";
   if (Serial.available()) {      // If anything comes in Serial (USB),
-    if (Serial.readString() == "forward") {
-      Serial.println("GO");
-      M_Left.setmotor(_CW, 80);
-      M_Right.setmotor(_CW, 80);
+    cmd = Serial.readString();
+    if (cmd.startsWith("AT+setLpwm=")) {
+      temp = cmd.substring(cmd.indexOf("=") + 1, cmd.length());
+      // Serial.println(temp.toInt());
+      pwm_left = temp.toInt();
+      Serial.println("ok");
+    } else if (cmd.startsWith("AT+setRpwm=")) {
+      temp = cmd.substring(cmd.indexOf("=") + 1, cmd.length());
+      // Serial.println(temp.toInt());
+      pwm_right = temp.toInt();
+      Serial.println("ok");
+    } else if (cmd == "AT+getLpwm") {
+      Serial.println(pwm_left);
+    } else if (cmd == "AT+getRpwm") {
+      Serial.println(pwm_right);
+    } else if (cmd == "AT+getLrpm") {
+      Serial.println(Lrpm);
+    } else if (cmd == "AT+getRrpm") {
+      Serial.println(Rrpm);
+    } else if (cmd == "AT+stop") {
+      pwm_left = 0;
+      pwm_right = 0;
+      Serial.println("ok");
     }
   }
+
+  move(pwm_left, pwm_right);
+
   if (millis() - time2 >= 1000){   /* 每秒更新 */
       // 計算 rpm 時，停止計時
       noInterrupts();
@@ -63,12 +99,8 @@ void loop() {
       Lcount = 0;
       Rcount = 0;
 
-      // 輸出至Console
-      Serial.print("LRPM = ");
-      Serial.println(Lrpm,DEC);
-      Serial.print("RRPM = ");
-      Serial.println(Rrpm,DEC);
       //Restart the interrupt processing
       interrupts();
   }
 }
+
