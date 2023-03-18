@@ -61,25 +61,33 @@ void loop() {
   String temp = "";
   if (Serial.available()) {      // If anything comes in Serial (USB),
     cmd = Serial.readString();
-    if (cmd.startsWith("AT+setLpwm=")) {
+    if (cmd.startsWith("AT+setLpwm=")) {    //set left motor speed
       temp = cmd.substring(cmd.indexOf("=") + 1, cmd.length());
       // Serial.println(temp.toInt());
-      pwm_left = temp.toInt();
+      if (temp.toInt() > 100) {
+        pwm_left = 100;
+      } else {
+        pwm_left = temp.toInt();
+      }
       Serial.println("ok");
-    } else if (cmd.startsWith("AT+setRpwm=")) {
+    } else if (cmd.startsWith("AT+setRpwm=")) {    //set right motor speed
       temp = cmd.substring(cmd.indexOf("=") + 1, cmd.length());
       // Serial.println(temp.toInt());
-      pwm_right = temp.toInt();
+      if (temp.toInt() > 100) {
+        pwm_right = 100;
+      } else {
+        pwm_right = temp.toInt();
+      }
       Serial.println("ok");
-    } else if (cmd == "AT+getLpwm") {
+    } else if (cmd == "AT+getLpwm") {     //get left motor speed
       Serial.println(pwm_left);
-    } else if (cmd == "AT+getRpwm") {
+    } else if (cmd == "AT+getRpwm") {     //get right motor speed
       Serial.println(pwm_right);
-    } else if (cmd == "AT+getLrpm") {
+    } else if (cmd == "AT+getLrpm") {     //get left wheel RPM
       Serial.println(Lrpm);
-    } else if (cmd == "AT+getRrpm") {
+    } else if (cmd == "AT+getRrpm") {     //get right wheel RPM
       Serial.println(Rrpm);
-    } else if (cmd == "AT+stop") {
+    } else if (cmd == "AT+stop") {      //set motors to stop
       pwm_left = 0;
       pwm_right = 0;
       Serial.println("ok");
