@@ -43,7 +43,7 @@ void move(int LSpeed, int RSpeed) {
 
     if (RSpeed >= 0) {
         M_Right.setmotor(_CW, RSpeed);
-    } else if (LSpeed < 0) {
+    } else if (RSpeed < 0) {
         M_Right.setmotor(_CCW, abs(RSpeed));
     }
 }
@@ -66,6 +66,8 @@ void loop() {
       // Serial.println(temp.toInt());
       if (temp.toInt() > 100) {
         pwm_left = 100;
+      } else if (temp.toInt() < -100) {
+        pwm_left = -100;
       } else {
         pwm_left = temp.toInt();
       }
@@ -75,6 +77,8 @@ void loop() {
       // Serial.println(temp.toInt());
       if (temp.toInt() > 100) {
         pwm_right = 100;
+      } else if (temp.toInt() < -100) {
+        pwm_right = -100;
       } else {
         pwm_right = temp.toInt();
       }
@@ -91,24 +95,26 @@ void loop() {
       pwm_left = 0;
       pwm_right = 0;
       Serial.println("ok");
+    } else if (cmd == "AT") {
+      Serial.println("ok");
     }
   }
 
   move(pwm_left, pwm_right);
 
   if (millis() - time2 >= 1000){   /* 每秒更新 */
-      // 計算 rpm 時，停止計時
-      noInterrupts();
+    // 計算 rpm 時，停止計時
+    noInterrupts();
 
-      // 偵測的格數count * (60 * 1000 / 一圈網格數20）/ 時間差) 
-      Lrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Lcount;
-      Rrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Rcount;
-      time2 = millis();
-      Lcount = 0;
-      Rcount = 0;
+    // 偵測的格數count * (60 * 1000 / 一圈網格數20）/ 時間差) 
+    Lrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Lcount;
+    Rrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Rcount;
+    time2 = millis();
+    Lcount = 0;
+    Rcount = 0;
 
-      //Restart the interrupt processing
-      interrupts();
+    //Restart the interrupt processing
+    interrupts();
   }
 }
 

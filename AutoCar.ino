@@ -34,7 +34,7 @@ void move(int LSpeed, int RSpeed) {
 
     if (RSpeed >= 0) {
         M_Right.setmotor(_CW, RSpeed);
-    } else if (LSpeed < 0) {
+    } else if (RSpeed < 0) {
         M_Right.setmotor(_CCW, abs(RSpeed));
     }
 }
@@ -85,6 +85,8 @@ void loop() {
     } else if (cmd == "AT+stop") {      //set motors to stop
       pwm_left = 0;
       pwm_right = 0;
+      Serial.println("ok");
+    } else if (cmd == "AT") {
       Serial.println("ok");
     }
   }

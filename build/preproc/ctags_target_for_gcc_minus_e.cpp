@@ -35,7 +35,7 @@ void move(int LSpeed, int RSpeed) {
 
     if (RSpeed >= 0) {
         M_Right.setmotor(2, RSpeed);
-    } else if (LSpeed < 0) {
+    } else if (RSpeed < 0) {
         M_Right.setmotor(1, abs(RSpeed));
     }
 }
@@ -58,6 +58,8 @@ void loop() {
       // Serial.println(temp.toInt());
       if (temp.toInt() > 100) {
         pwm_left = 100;
+      } else if (temp.toInt() < -100) {
+        pwm_left = -100;
       } else {
         pwm_left = temp.toInt();
       }
@@ -67,6 +69,8 @@ void loop() {
       // Serial.println(temp.toInt());
       if (temp.toInt() > 100) {
         pwm_right = 100;
+      } else if (temp.toInt() < -100) {
+        pwm_right = -100;
       } else {
         pwm_right = temp.toInt();
       }
@@ -83,23 +87,25 @@ void loop() {
       pwm_left = 0;
       pwm_right = 0;
       Serial.println("ok");
+    } else if (cmd == "AT") {
+      Serial.println("ok");
     }
   }
 
   move(pwm_left, pwm_right);
 
   if (millis() - time2 >= 1000){ /* 每秒更新 */
-      // 計算 rpm 時，停止計時
-      (__extension__({uint32_t state; __asm__ __volatile__("rsil %0," "15" : "=a" (state) :: "memory"); state;}));
+    // 計算 rpm 時，停止計時
+    (__extension__({uint32_t state; __asm__ __volatile__("rsil %0," "15" : "=a" (state) :: "memory"); state;}));
 
-      // 偵測的格數count * (60 * 1000 / 一圈網格數20）/ 時間差) 
-      Lrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Lcount;
-      Rrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Rcount;
-      time2 = millis();
-      Lcount = 0;
-      Rcount = 0;
+    // 偵測的格數count * (60 * 1000 / 一圈網格數20）/ 時間差) 
+    Lrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Lcount;
+    Rrpm = (60 * 1000 / grid_num )/ (millis() - time2) * Rcount;
+    time2 = millis();
+    Lcount = 0;
+    Rcount = 0;
 
-      //Restart the interrupt processing
-      (__extension__({uint32_t state; __asm__ __volatile__("rsil %0," "0" : "=a" (state) :: "memory"); state;}));
+    //Restart the interrupt processing
+    (__extension__({uint32_t state; __asm__ __volatile__("rsil %0," "0" : "=a" (state) :: "memory"); state;}));
   }
 }
