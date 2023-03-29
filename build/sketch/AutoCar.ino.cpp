@@ -12,8 +12,8 @@ Motor M_Right(0x30,_MOTOR_B, 1000);
 
 unsigned int Lcount = 0;
 unsigned int Rcount = 0;
-int LcounterPin = 14;
-int RcounterPin = 12;
+int LcounterPin = 12;
+int RcounterPin = 14;
 unsigned long time2;
 int Lrpm = 0;
 int Rrpm = 0;
