@@ -23,7 +23,9 @@
                 "D:\\Lab\\AutoCar\\wirelessCtrl\\build\\core",
                 "C:\\Users\\blaze\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.1\\cores\\esp8266",
                 "C:\\Users\\blaze\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.1\\variants\\d1_mini",
-                "C:\\Users\\blaze\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.1\\libraries\\ESP8266WiFi\\src"
+                "C:\\Users\\blaze\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.1\\libraries\\ESP8266WiFi\\src",
+                "C:\\Users\\blaze\\Documents\\Arduino\\libraries\\WEMOS_Motor_Shield_Arduino_Library-master\\src",
+                "C:\\Users\\blaze\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.1\\libraries\\Wire"
             ],
             "forcedInclude": [
                 "C:\\Users\\blaze\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.1\\cores\\esp8266\\Arduino.h"

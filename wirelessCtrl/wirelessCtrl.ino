@@ -64,6 +64,7 @@ void setup() {
     IPAddress myIP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
     Serial.println(myIP);
+    
   } else {
     setup_wifi();
   }
@@ -178,6 +179,9 @@ void setup_wifi() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+  Udp.beginPacket("192.168.100.208", 8888);
+  Udp.print(WiFi.localIP());
+  Udp.endPacket();
 }
 
 void UDPReply(String replybuffer) {
