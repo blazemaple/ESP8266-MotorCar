@@ -107,4 +107,6 @@ void loop() {
     //Restart the interrupt processing
     interrupts();
   }
+  Serial.printf("%d,%d\n",Lrpm,Rrpm);
+  
 }
