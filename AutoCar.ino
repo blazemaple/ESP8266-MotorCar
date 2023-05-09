@@ -74,6 +74,29 @@ void loop() {
         pwm_right = temp.toInt();
       }
       Serial.println("ok");
+    } else if (cmd.startsWith("AT+setLRpwm=")) {    //set left and right motor speed
+      int separator_index = cmd.indexOf(",");
+      if (separator_index != -1) {
+        String left_pwm_str = cmd.substring(cmd.indexOf("=") + 1, separator_index);
+        String right_pwm_str = cmd.substring(separator_index + 1, cmd.length());
+        int left_pwm = left_pwm_str.toInt();
+        int right_pwm = right_pwm_str.toInt();
+        if (left_pwm > 100) {
+          pwm_left = 100;
+        } else if (left_pwm < -100) {
+          pwm_left = -100;
+        } else {
+          pwm_left = left_pwm;
+        }
+        if (right_pwm > 100) {
+          pwm_right = 100;
+        } else if (right_pwm < -100) {
+          pwm_right = -100;
+        } else {
+          pwm_right = right_pwm;
+        }
+      }
+      Serial.println("ok");
     } else if (cmd == "AT+getLpwm") {     //get left motor speed
       Serial.println(pwm_left);
     } else if (cmd == "AT+getRpwm") {     //get right motor speed
