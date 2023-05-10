@@ -1,7 +1,7 @@
 #include "WEMOS_Motor.h"
 
-int pwm_left;
-int pwm_right;
+int pwm_left = 0;         //左輪馬力
+int pwm_right = 0;        //右輪馬力
 
 //Motor shiled I2C Address: 0x30
 //PWM frequency: 1000Hz(1kHz)
@@ -45,6 +45,20 @@ void getRPM() {
   }
 }
 
+void move(int LSpeed, int RSpeed) {
+    if (LSpeed >= 0) {
+        M_Left.setmotor(_CW, LSpeed);
+    } else if (LSpeed < 0) {
+        M_Left.setmotor(_CCW, abs(LSpeed));
+    }
+
+    if (RSpeed >= 0) {
+        M_Right.setmotor(_CW, RSpeed);
+    } else if (RSpeed < 0) {
+        M_Right.setmotor(_CCW, abs(RSpeed));
+    }
+}
+
 void setup()
 {
   Serial.begin(115200);
@@ -56,17 +70,6 @@ void setup()
 
 void loop()
 {
-  Serial.println("GO Left");
-  //TODO: Please complete this section
-  delay(1500);
+  move(pwm_left, pwm_right);
   getRPM();
-  
-  Serial.println("GO Right");
-  //TODO: Please complete this section
-  delay(1500);
-  getRPM();
-  
-  Serial.println("STOP");
-  //TODO: Please complete this section
-  delay(1000);
 }
