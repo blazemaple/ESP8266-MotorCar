@@ -20,10 +20,10 @@ int Lrpm = 0;
 int Rrpm = 0;
 uint8_t grid_num = 20;
 
-#define APmode 0
+#define APmode 1
 /* Set these to your desired credentials. */
-const char *ssid = "E520";
-const char *password = "nkfuste520wifi";
+const char *ssid = "C108118129_car";
+const char *password = "00000000";
 unsigned int localPort = 8888;  // local port to listen on
 
 // buffers for receiving and sending data
@@ -57,7 +57,8 @@ void move(int LSpeed, int RSpeed) {
 void setup() {
   Serial.begin(115200);
   if (APmode) {
-    Serial.print("Configuring access point...");
+    Serial.println("");
+    Serial.println("Configuring access point...");
     /* You can remove the password parameter if you want the AP to be open. */
     WiFi.softAP(ssid, password);
 
@@ -114,6 +115,30 @@ void loop() {
       }
       Serial.println("ok");
       UDPReply("ok");
+    } else if (cmd.startsWith("AT+setLRpwm=")) {    //set left and right motor speed
+      int separator_index = cmd.indexOf(",");
+      if (separator_index != -1) {
+        String left_pwm_str = cmd.substring(cmd.indexOf("=") + 1, separator_index);
+        String right_pwm_str = cmd.substring(separator_index + 1, cmd.length());
+        int left_pwm = left_pwm_str.toInt();
+        int right_pwm = right_pwm_str.toInt();
+        if (left_pwm > 100) {
+          pwm_left = 100;
+        } else if (left_pwm < -100) {
+          pwm_left = -100;
+        } else {
+          pwm_left = left_pwm;
+        }
+        if (right_pwm > 100) {
+          pwm_right = 100;
+        } else if (right_pwm < -100) {
+          pwm_right = -100;
+        } else {
+          pwm_right = right_pwm;
+        }
+      }
+      Serial.println("ok");
+      UDPReply("ok");
     } else if (cmd == "AT+getLpwm") {     //get left motor speed
       Serial.println(pwm_left);
       UDPReply(String(pwm_left));
@@ -157,6 +182,7 @@ void loop() {
     //Restart the interrupt processing
     interrupts();
   }
+  UDPReply(String(Lrpm) + "," + String(Rrpm));
 }
 
 void setup_wifi() {
