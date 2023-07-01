@@ -2,7 +2,7 @@
     * device: DWM1001C
     * path: nrf_sdk_v15/myproject
     * UART to DDcar
-    * nrf_sdk_v15 is dong's 
+    * dong's nrf_sdk_v15
 
 * SerialToSerialBT
     * device: ESP32
