@@ -1,3 +1,6 @@
+* Main Device: WeMos D1 mini WiFi ESP8266
+* Arduino IDE
+  
 * DDcar_UWB
     * device: DWM1001C
     * path: nrf_sdk_v15/myproject
